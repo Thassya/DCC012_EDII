@@ -185,9 +185,9 @@ public class Janela extends javax.swing.JFrame {
 
     private void txtBuscaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscaKeyTyped
 
-        if (txtBusca.getText().length() >= 3) {
+        if (txtBusca.getText().length() > 2) {
             String texto = txtBusca.getText();
-           //dao.getTrie().busca(texto);
+           dao.getTrie().AutoComplete(texto);
         }
     }//GEN-LAST:event_txtBuscaKeyTyped
 

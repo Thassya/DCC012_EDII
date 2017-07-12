@@ -21,10 +21,58 @@ public class TrieTernaria {
     private static ArrayList<Produto> filtroProdutos;
     private ArrayList<Produto> autoCompletar;
 
+    /**
+     * For best performance, strings should be inserted into the ternary tree in
+     * a random order. In particular, do not insert strings in the alphabetical
+     * order. Each mini-tree that corresponds to a single trie node would
+     * degenerate into a linked list, significantly increasing the cost of
+     * lookups. Of course, more complex self-balancing ternary trees can be
+     * implemented as well.
+     */
     public TrieTernaria() {
         this.filtroProdutos = new ArrayList<Produto>();
         this.autoCompletar = new ArrayList<>();
         this.quantidade = 0;
+    }
+
+    public List<Produto> AutoComplete(String palavra) {
+        //if (s == null || s == "") { throw new ArgumentException();}
+        List<Produto> suggestions = new ArrayList();
+
+        int pos = 0;
+        NoTrie root = raiz;
+        while (root != null) {
+            char letra = palavra.charAt(pos);
+            if (letra > root.getLetra()) {
+                root = root.getDireita();
+            } else if (letra < root.getLetra()) {
+                root = root.getEsquerda();
+            } else {
+                if (++pos == palavra.length()) {
+                    if (root.ehFolha()) {
+                        suggestions.add(root.getProduto());
+                    }
+                    FindSuggestions(palavra, suggestions, root.getMeio());
+                    return (suggestions);
+                }
+                root = root.getMeio();
+            }
+        }
+        return (suggestions);
+    }
+
+    private void FindSuggestions(String palavra, List<Produto> suggestions, NoTrie root) {
+        if (root == null) {
+            return;
+        }
+
+        if (root.ehFolha()) {
+            suggestions.add(root.getProduto());
+        }
+
+        FindSuggestions(palavra, suggestions, root.getEsquerda());
+        FindSuggestions(palavra + root.getLetra(), suggestions, root.getMeio());
+        FindSuggestions(palavra, suggestions, root.getDireita());
     }
 
     /**

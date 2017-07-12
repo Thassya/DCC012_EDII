@@ -85,6 +85,7 @@ public class NoTrie {
 
     public void setProduto(Produto produto) {
         this.produto = produto;
+        this.ehFolha=true;
     }
 
    
