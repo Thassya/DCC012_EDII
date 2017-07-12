@@ -5,6 +5,8 @@
  */
 package ufjf.br.modelos;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Thassya
@@ -12,10 +14,11 @@ package ufjf.br.modelos;
 public class NoTrie {
     private char letra;
     private int value = 1;
-    private boolean ehFolha=false;
+    private boolean ehFolha = false;
     private NoTrie esquerda;
     private NoTrie direita;
     private NoTrie meio;
+    private Produto produto;
 
     public char getLetra() {
         return letra;
@@ -57,13 +60,32 @@ public class NoTrie {
         return this.ehFolha;
     }
 
-    public NoTrie(){
+    public NoTrie() {
     }
+
     public NoTrie(char letter) {
         this.letra = letter;
     }
 
-    public String toString(){
-        return this.letra + "-->" + this.esquerda + "|" +this.meio  + "|" + this.direita ;
+    public String toString() {
+        return this.letra + "-->" + this.esquerda + "|" + this.meio + "|" + this.direita;
     }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
+
+   
 }

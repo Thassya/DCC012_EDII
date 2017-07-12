@@ -10,10 +10,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
+import ufjf.br.modelos.TrieTernaria;
 
 /**
  *
@@ -21,80 +19,95 @@ import java.util.List;
  */
 public class ProdutoDAO implements iProdutoDAO {
 
-    private static List<Produto> produtoList;
+    private static TrieTernaria trie;
 
     public ProdutoDAO() {
-        this.produtoList = new ArrayList<>();
+        this.trie = new TrieTernaria();
+    }
+
+    public static TrieTernaria getTrie() {
+        return trie;
+    }
+
+    public static void setTrie(TrieTernaria trie) {
+        ProdutoDAO.trie = trie;
     }
 
     @Override
     public void Insere(Produto p) throws Exception {
-        produtoList.add(p);
+        trie.insere(p);
     }
 
     @Override
     public List<Produto> getTodos() {
-        if (!produtoList.isEmpty()) {
-            return produtoList;
-        } else {
-            try {                 
-                FileReader fileReader = new FileReader("C:\\Users\\Thassya\\Documents\\GitHub\\DCC012_EDII\\src\\resources\\523595palavras.txt");
-                BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-                String linha = bufferedReader.readLine();
-                while (linha != null) {
-                    if (linha != null) {
-                        String nomeProduto = linha.substring(linha.indexOf("Produto: ") + 9, linha.indexOf(" Categoria:"));            //Separa em substrings específicas de leitura
-                        String categoria = linha.substring(linha.indexOf("Categoria: ") + 11, linha.indexOf(" Preço:"));
-                        String preco = linha.substring(linha.indexOf("Preço: ") + 7, linha.indexOf(" Descrição:"));
-                        String descricao = linha.substring(linha.indexOf("Descrição: ") + 11, linha.length());
-                        Produto p = new Produto(nomeProduto, categoria, preco, descricao);
-
-                        produtoList.add(p);
-                    }
-                    linha = bufferedReader.readLine();
-                }
-                bufferedReader.close();
-            } catch (FileNotFoundException e) {
-                System.err.println("Arquivo não encontrado!!");
-                e.printStackTrace();
-            } catch (IOException e) {
-                System.err.printf("Erro na abertura do arquivo: %s.\n", e.getMessage());
-                e.printStackTrace();
-            }
+        if (trie.getRaiz() == null) {
+            lerArquivo();
         }
-        ordenarPorNome(produtoList);
-        return produtoList;
+
+        return trie.getProdutos();
     }
 
-    public void ordenarPorNome(List<Produto> produtos) {
+    public void lerArquivo() {
+        try {
+            FileReader fileReader = new FileReader("C:\\Users\\Thassya\\Documents\\GitHub\\DCC012_EDII\\src\\resources\\_BancoDeDados.txt");
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-        Collections.sort(produtos, (Object o1, Object o2) -> {
-            Produto p1 = (Produto) o1;
-            Produto p2 = (Produto) o2;
-
-            return p1.getNome().compareTo(p2.getNome());
-        });
-    }
-
-    public void ordenarPorCategoria(List<Produto> produtos) {
-
-        Collections.sort(produtos, new Comparator() {
-            @Override
-            public int compare(Object o1, Object o2) {
-                Produto p1 = (Produto) o1;
-                Produto p2 = (Produto) o2;
-
-                return p1.getCategoria().compareTo(p2.getCategoria());
+            String linha = bufferedReader.readLine();
+            int count = 1;
+            while (linha != null) {
+                if (linha != null) {
+                    String[] produto = linha.split(";");
+                    Produto p = new Produto();
+                    p.setNome(produto[0]);
+                    p.setCategoria(produto[1]);
+                    p.setPreco(produto[2]);
+                    p.setDescricao(produto[3]);
+                    p.setId(count);
+                    trie.insere(p);
+                }
+                count++;
+                linha = bufferedReader.readLine();
             }
-        });
+            bufferedReader.close();
+            System.out.println("LIDO!");
+        } catch (FileNotFoundException e) {
+            System.err.println("Arquivo não encontrado!!");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.err.printf("Erro na abertura do arquivo: %s.\n", e.getMessage());
+            e.printStackTrace();
+        }
     }
 
-    public static List<Produto> getProdutoList() {
-        return produtoList;
+    public List<Produto> getTodosPorNome() {
+        return trie.getProdutosPorNome();
     }
 
-    public static void setProdutoList(List<Produto> produtoList) {
-        ProdutoDAO.produtoList = produtoList;
+    public List<Produto> getTodosPorNomeDescrescente() {
+        return trie.getProdutosPorNomeDescrescente();
+    }
+
+    public List<Produto> getTodosPorCategoria() {
+        return trie.getProdutosPorCategoria();
+    }
+
+    public List<Produto> getTodosPorCategoriaDescrescente() {
+        return trie.getProdutosPorCategoriaDescrescente();
+    }
+
+    public List<Produto> getTodosPorPreco() {
+        return trie.getProdutosPorCategoria();
+    }
+
+    public List<Produto> getTodosPorPrecoDecrescente() {
+        return trie.getProdutosPorCategoria();
+    }
+
+    public static TrieTernaria getProdutoList() {
+        return trie;
+    }
+
+    public static void setProdutoList(TrieTernaria produtoList) {
+        ProdutoDAO.trie = produtoList;
     }
 }

@@ -5,12 +5,17 @@
  */
 package ufjf.br.main;
 
-import ufjf.br.view.Apresentacao;
+import ufjf.br.dao.ProdutoDAO;
+import ufjf.br.view.Janela;
 
 /**
  *
  * @author Thassya
  */
 public class main {
-    Apresentacao janela = new Apresentacao();
+
+    public static void main(String[] args) {
+        Janela j = new Janela();
+        
+    }
 }

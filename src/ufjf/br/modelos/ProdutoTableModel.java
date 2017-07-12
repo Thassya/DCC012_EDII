@@ -17,37 +17,47 @@ import ufjf.br.dao.iProdutoDAO;
  */
 public class ProdutoTableModel extends AbstractTableModel {
 
-    private final int COL_NOME = 0;
-    private final int COL_CATEGORIA = 1;
-    private final int COL_PRECO = 2;
-    private final int COL_DESCRICAO = 3;
-    
-    private List<Produto> produtoList;
+    private final int COL_ID = 0;
+    private final int COL_NOME = 1;
+    private final int COL_CATEGORIA = 2;
+    private final int COL_PRECO = 3;
+    private final int COL_DESCRICAO = 4;
+
+    private TrieTernaria trie;
     private final iProdutoDAO dao;
-    
+
     public ProdutoTableModel() {
-        this.produtoList = new ArrayList<>();
         dao = new ProdutoDAO();
     }
-    
+
     @Override
     public int getRowCount() {
         atualizaDados();
-        if (produtoList != null) {
-            return produtoList.size();
-        } else {
-            return 0;
+        try {
+            return dao.getTodos().size();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
+        return 0;
     }
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 5;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
+        List<Produto> produtoList = new ArrayList<>();
+        try {
+            produtoList = dao.getTodos();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+
         switch (columnIndex) {
+            case COL_ID:
+                return produtoList.get(rowIndex).getId();
             case COL_NOME:
                 return produtoList.get(rowIndex).getNome();
             case COL_CATEGORIA:
@@ -64,6 +74,8 @@ public class ProdutoTableModel extends AbstractTableModel {
     @Override
     public String getColumnName(int column) {
         switch (column) {
+            case COL_ID:
+                return "ID";
             case COL_NOME:
                 return "Nome";
             case COL_CATEGORIA:
@@ -77,12 +89,16 @@ public class ProdutoTableModel extends AbstractTableModel {
         }
     }
 
-    private void atualizaDados(){
-        produtoList = new ArrayList<>();
+    private void atualizaDados() {
         try {
-            produtoList = dao.getTodos();
-        }catch (Exception ex){
+            dao.getTodos();
+        } catch (Exception ex) {
             System.err.println(ex.getMessage());
         }
     }
+
+    public ProdutoDAO getDao() {
+        return (ProdutoDAO) dao;
+    }
+     
 }

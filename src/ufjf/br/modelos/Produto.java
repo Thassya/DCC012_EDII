@@ -14,6 +14,15 @@ public class Produto {
     private String Categoria;
     private String Descricao;
     private String Preco;
+    private int Id;
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int Id) {
+        this.Id = Id;
+    }
 
     public Produto(){
 
