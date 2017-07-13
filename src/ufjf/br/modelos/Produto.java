@@ -13,22 +13,13 @@ public class Produto {
     private String Nome;
     private String Categoria;
     private String Descricao;
-    private String Preco;
-    private int Id;
-
-    public int getId() {
-        return Id;
-    }
-
-    public void setId(int Id) {
-        this.Id = Id;
-    }
+    private float Preco;
 
     public Produto(){
 
     }
 
-    public Produto(String Nome, String Categoria, String Descricao, String Preco) {
+    public Produto(String Nome, String Categoria, String Descricao, float Preco) {
         this.Nome = Nome;
         this.Categoria = Categoria;
         this.Descricao = Descricao;
@@ -59,11 +50,11 @@ public class Produto {
         this.Descricao = Descricao;
     }
 
-    public String getPreco() {
+    public float getPreco() {
         return Preco;
     }
 
-    public void setPreco(String Preco) {
+    public void setPreco(float Preco) {
         this.Preco = Preco;
     }
 

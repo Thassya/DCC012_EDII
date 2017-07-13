@@ -6,19 +6,24 @@
 package ufjf.br.modelos;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Thassya
  */
 public class NoTrie {
+
     private char letra;
     private int value = 1;
     private boolean ehFolha = false;
     private NoTrie esquerda;
     private NoTrie direita;
     private NoTrie meio;
-    private Produto produto;
+    private Produto produto; //para ordernar produto!
+    
+    private List<Produto> listaProduto = new ArrayList<>();
+    
 
     public char getLetra() {
         return letra;
@@ -85,8 +90,19 @@ public class NoTrie {
 
     public void setProduto(Produto produto) {
         this.produto = produto;
+        this.ehFolha = true;
+    }
+
+    public List<Produto> getListaProduto() {
+        return listaProduto;
+    }
+
+    public void setListaProduto(List<Produto> listaProduto) {
+        this.listaProduto = listaProduto;
+    }
+    public void addItemListaProduto(Produto p){
+        this.listaProduto.add(p);
         this.ehFolha=true;
     }
 
-   
 }

@@ -21,10 +21,11 @@ public class InsereProduto extends javax.swing.JFrame {
 
     /**
      * Creates new form InsereProduto
+     *
      * @param p
      */
     public InsereProduto(JFrame p) {
-        initComponents();        
+        initComponents();
         this.parent = p;
 
     }
@@ -154,13 +155,13 @@ public class InsereProduto extends javax.swing.JFrame {
 
             String nome = txtNome.getText();
             String categoria = txtCategoria.getText();
-            String preco = txtPreco.getText();
+            String aux = txtPreco.getText().replace(",", ".");
+            float preco = Float.parseFloat(aux);
             String descricao = txtDescricao.getText();
-            Produto prod = new Produto(nome, categoria, preco, descricao);
+            Produto prod = new Produto(nome, categoria, descricao, preco);
 
             Janela p = (Janela) parent;
             p.addProduto(prod);
-            
 
             txtNome.setText("");
             txtCategoria.setText("");
@@ -205,7 +206,7 @@ public class InsereProduto extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new InsereProduto().setVisible(true);
-                
+
             }
         });
     }

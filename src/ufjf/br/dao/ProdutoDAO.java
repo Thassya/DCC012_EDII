@@ -6,11 +6,14 @@
 package ufjf.br.dao;
 
 import ufjf.br.modelos.Produto;
+import ufjf.br.modelos.Merge;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import ufjf.br.modelos.TrieTernaria;
 
 /**
@@ -19,53 +22,57 @@ import ufjf.br.modelos.TrieTernaria;
  */
 public class ProdutoDAO implements iProdutoDAO {
 
-    private static TrieTernaria trie;
-
+    private static TrieTernaria trieProduto;
+    private static TrieTernaria trieCategoria;
+    
+    private Merge merge;
+    
     public ProdutoDAO() {
-        this.trie = new TrieTernaria();
+        this.trieCategoria=new TrieTernaria();
+        this.trieProduto = new TrieTernaria();
+        merge=new Merge();        
     }
 
-    public static TrieTernaria getTrie() {
-        return trie;
+    public static TrieTernaria getTrieProduto() {
+        return trieProduto;
     }
 
-    public static void setTrie(TrieTernaria trie) {
-        ProdutoDAO.trie = trie;
+    public static TrieTernaria getTrieCategoria() {
+        return trieCategoria;
     }
 
     @Override
     public void Insere(Produto p) throws Exception {
-        trie.insere(p);
+        trieProduto.insere(p);
     }
 
     @Override
     public List<Produto> getTodos() {
-        if (trie.getRaiz() == null) {
+        if (trieProduto.getRaizProd() == null) {
             lerArquivo();
         }
 
-        return trie.getProdutos();
+        return trieProduto.getProdutos();
     }
 
     public void lerArquivo() {
         try {
-            FileReader fileReader = new FileReader("C:\\Users\\Thassya\\Documents\\GitHub\\DCC012_EDII\\src\\resources\\_BancoDeDados.txt");
+            FileReader fileReader = new FileReader("C:\\Users\\Thassya\\Documents\\GitHub\\DCC012_EDII\\src\\resources\\_50.txt");
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
             String linha = bufferedReader.readLine();
-            int count = 1;
             while (linha != null) {
                 if (linha != null) {
                     String[] produto = linha.split(";");
                     Produto p = new Produto();
                     p.setNome(produto[0]);
                     p.setCategoria(produto[1]);
-                    p.setPreco(produto[2]);
+                    String aux = produto[2].replace(",", ".");
+                    p.setPreco(Float.parseFloat(aux));
                     p.setDescricao(produto[3]);
-                    p.setId(count);
-                    trie.insere(p);
+                    trieProduto.insere(p);
+                    trieCategoria.insereCat(p);
                 }
-                count++;
                 linha = bufferedReader.readLine();
             }
             bufferedReader.close();
@@ -80,34 +87,47 @@ public class ProdutoDAO implements iProdutoDAO {
     }
 
     public List<Produto> getTodosPorNome() {
-        return trie.getProdutosPorNome();
+       return trieProduto.getProdutosPorNome();
     }
 
     public List<Produto> getTodosPorNomeDescrescente() {
-        return trie.getProdutosPorNomeDescrescente();
+        return trieProduto.getProdutosPorNomeDes();
     }
 
     public List<Produto> getTodosPorCategoria() {
-        return trie.getProdutosPorCategoria();
+        return trieProduto.getProdutosPorCategoria();
     }
 
     public List<Produto> getTodosPorCategoriaDescrescente() {
-        return trie.getProdutosPorCategoriaDescrescente();
+        return trieProduto.getProdutosPorCategoriaDes();
     }
 
     public List<Produto> getTodosPorPreco() {
-        return trie.getProdutosPorCategoria();
+        return trieProduto.getProdutosPorPreco();
     }
 
     public List<Produto> getTodosPorPrecoDecrescente() {
-        return trie.getProdutosPorCategoria();
+        return trieProduto.getProdutosPorPrecoDes();
     }
 
     public static TrieTernaria getProdutoList() {
-        return trie;
+        return trieProduto;
     }
 
     public static void setProdutoList(TrieTernaria produtoList) {
-        ProdutoDAO.trie = produtoList;
+        ProdutoDAO.trieProduto = produtoList;
+    }
+    
+    public JList<Produto> ListToJList(List<Produto> list) {
+
+        JList<Produto> jlist = new JList<>(new DefaultListModel<>());
+        DefaultListModel listModel = new DefaultListModel();
+
+        for (Produto percorrer : list) {
+            listModel.addElement(percorrer);
+        }
+
+        jlist.setModel(listModel);
+        return jlist;
     }
 }
