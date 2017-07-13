@@ -5,6 +5,7 @@
  */
 package ufjf.br.modelos;
 
+import com.sun.istack.internal.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -368,6 +369,7 @@ public class TrieTernaria {
      */
     public ArrayList<Produto> getProdutosPorPreco() {
         filtroProdutos = merge.mergeSortPreco(filtroProdutos, 0);
+
         return filtroProdutos;
     }
 

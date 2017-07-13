@@ -6,6 +6,7 @@
 package ufjf.br.view;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -28,8 +29,7 @@ public class Janela extends javax.swing.JFrame {
     private ProdutoTableModel tmProduto = new ProdutoTableModel();
     private ProdutoDAO dao = tmProduto.getDao();
     private AutoCompleteTableModel tmAutoComplete = new AutoCompleteTableModel();
-
-    private JList<Produto> lstProdutosAutoComplete = new JList<>(new DefaultListModel<>());
+    private ArrayList<Produto> listaAutoComplete = new ArrayList<>();
 
     private JFrame form;
 
@@ -38,6 +38,8 @@ public class Janela extends javax.swing.JFrame {
      */
     public Janela() {
         initComponents();
+        cbPrecoDesc.setEnabled(false);
+        cbPrecoCresc.setEnabled(false);
         setVisible(true);
         setLocationRelativeTo(null);
     }
@@ -64,6 +66,8 @@ public class Janela extends javax.swing.JFrame {
         btnAutocomplete = new javax.swing.JButton();
         txtBuscaCategoria = new javax.swing.JTextField();
         btnCategoria = new javax.swing.JButton();
+        cbPrecoDesc = new javax.swing.JCheckBox();
+        cbPrecoCresc = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -94,16 +98,17 @@ public class Janela extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAddProd)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(cbOrdena, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(689, 689, 689))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 768, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnAddProd)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbOrdena, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 768, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(318, 318, 318))
         );
         jPanel1Layout.setVerticalGroup(
@@ -145,20 +150,42 @@ public class Janela extends javax.swing.JFrame {
             }
         });
 
+        cbPrecoDesc.setBackground(new java.awt.Color(255, 255, 255));
+        cbPrecoDesc.setText("Preço Descrescente");
+        cbPrecoDesc.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbPrecoDescItemStateChanged(evt);
+            }
+        });
+
+        cbPrecoCresc.setBackground(new java.awt.Color(255, 255, 255));
+        cbPrecoCresc.setText("Preço Crescente");
+        cbPrecoCresc.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbPrecoCrescItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtBusca, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
-                    .addComponent(txtBuscaCategoria))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnAutocomplete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(cbPrecoDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbPrecoCresc, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtBusca, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                            .addComponent(txtBuscaCategoria))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnAutocomplete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
         );
@@ -167,7 +194,7 @@ public class Janela extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -176,9 +203,14 @@ public class Janela extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtBuscaCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnCategoria))
-                        .addGap(0, 159, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(33, 33, 33)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbPrecoDesc)
+                            .addComponent(cbPrecoCresc))))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
+
+        cbPrecoDesc.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -191,8 +223,9 @@ public class Janela extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -230,7 +263,16 @@ public class Janela extends javax.swing.JFrame {
 
     private void btnAutocompleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutocompleteActionPerformed
         String texto = txtBusca.getText();
-        tmAutoComplete.preencheLista(dao.getTrieProduto().autoCompleteProduto(texto));
+        listaAutoComplete.clear();
+        listaAutoComplete = dao.getTrieCategoria().autoCompleteCategoria(texto);
+        if (listaAutoComplete.size() > 1) {
+            cbPrecoDesc.setEnabled(true);
+            cbPrecoCresc.setEnabled(true);
+        } else {
+            cbPrecoDesc.setEnabled(false);
+            cbPrecoCresc.setEnabled(false);
+        }
+        tmAutoComplete.preencheLista(listaAutoComplete);
     }//GEN-LAST:event_btnAutocompleteActionPerformed
 
     private void btnAddProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProdActionPerformed
@@ -247,8 +289,34 @@ public class Janela extends javax.swing.JFrame {
 
     private void btnCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriaActionPerformed
         String texto = txtBuscaCategoria.getText();
-        tmAutoComplete.preencheLista(dao.getTrieCategoria().autoCompleteCategoria(texto));
+         listaAutoComplete.clear();
+        listaAutoComplete = dao.getTrieCategoria().autoCompleteCategoria(texto);
+        tmAutoComplete.preencheLista(listaAutoComplete);
+        if (listaAutoComplete.size() > 1) {
+            cbPrecoDesc.setEnabled(true);
+            cbPrecoCresc.setEnabled(true);
+        } else {
+            cbPrecoDesc.setEnabled(false);
+            cbPrecoCresc.setEnabled(false);
+        }
+
     }//GEN-LAST:event_btnCategoriaActionPerformed
+
+    private void cbPrecoDescItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbPrecoDescItemStateChanged
+       if(cbPrecoDesc.isSelected()){
+           listaAutoComplete = dao.getOrdenaResultadoDes(listaAutoComplete);
+           tmAutoComplete.constroiOrdenado(listaAutoComplete);
+           cbPrecoDesc.setSelected(false);
+       }
+    }//GEN-LAST:event_cbPrecoDescItemStateChanged
+
+    private void cbPrecoCrescItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbPrecoCrescItemStateChanged
+        if(cbPrecoCresc.isSelected()){
+           listaAutoComplete = dao.getOrdenaResultadoCres(listaAutoComplete);
+           tmAutoComplete.constroiOrdenado(listaAutoComplete);
+           cbPrecoCresc.setSelected(false);
+       }
+    }//GEN-LAST:event_cbPrecoCrescItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -299,6 +367,8 @@ public class Janela extends javax.swing.JFrame {
     private javax.swing.JButton btnAutocomplete;
     private javax.swing.JButton btnCategoria;
     private javax.swing.JComboBox<String> cbOrdena;
+    private javax.swing.JCheckBox cbPrecoCresc;
+    private javax.swing.JCheckBox cbPrecoDesc;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

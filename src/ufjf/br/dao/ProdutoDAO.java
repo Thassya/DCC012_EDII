@@ -5,12 +5,14 @@
  */
 package ufjf.br.dao;
 
+import com.sun.istack.internal.Nullable;
 import ufjf.br.modelos.Produto;
 import ufjf.br.modelos.Merge;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -24,13 +26,13 @@ public class ProdutoDAO implements iProdutoDAO {
 
     private static TrieTernaria trieProduto;
     private static TrieTernaria trieCategoria;
-    
+
     private Merge merge;
-    
+
     public ProdutoDAO() {
-        this.trieCategoria=new TrieTernaria();
+        this.trieCategoria = new TrieTernaria();
         this.trieProduto = new TrieTernaria();
-        merge=new Merge();        
+        merge = new Merge();
     }
 
     public static TrieTernaria getTrieProduto() {
@@ -87,7 +89,7 @@ public class ProdutoDAO implements iProdutoDAO {
     }
 
     public List<Produto> getTodosPorNome() {
-       return trieProduto.getProdutosPorNome();
+        return trieProduto.getProdutosPorNome();
     }
 
     public List<Produto> getTodosPorNomeDescrescente() {
@@ -110,24 +112,21 @@ public class ProdutoDAO implements iProdutoDAO {
         return trieProduto.getProdutosPorPrecoDes();
     }
 
+    public ArrayList<Produto> getOrdenaResultadoCres(ArrayList<Produto> p) {
+        merge.mergeSortPreco(p, 0);
+        return p;
+    }
+
+    public ArrayList<Produto> getOrdenaResultadoDes(ArrayList<Produto> p) {
+        merge.mergeSortPreco(p, 1);
+        return p;
+    }
+
     public static TrieTernaria getProdutoList() {
         return trieProduto;
     }
 
     public static void setProdutoList(TrieTernaria produtoList) {
         ProdutoDAO.trieProduto = produtoList;
-    }
-    
-    public JList<Produto> ListToJList(List<Produto> list) {
-
-        JList<Produto> jlist = new JList<>(new DefaultListModel<>());
-        DefaultListModel listModel = new DefaultListModel();
-
-        for (Produto percorrer : list) {
-            listModel.addElement(percorrer);
-        }
-
-        jlist.setModel(listModel);
-        return jlist;
     }
 }

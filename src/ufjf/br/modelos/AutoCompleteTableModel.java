@@ -73,4 +73,9 @@ public class AutoCompleteTableModel extends AbstractTableModel {
         this.listaProdutos = lista;
         this.fireTableDataChanged();
     }
+    
+    public void constroiOrdenado(ArrayList<Produto> lista){
+        this.listaProdutos = lista;
+        this.fireTableDataChanged();
+    }
 }
