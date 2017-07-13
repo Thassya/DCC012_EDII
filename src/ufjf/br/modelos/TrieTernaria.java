@@ -52,7 +52,6 @@ public class TrieTernaria {
 
     public ArrayList<Produto> autoCompleteProduto(String palavra) {
         Produto aux = busca(raizProd, palavra);
-
         ArrayList<Produto> sugestoes = new ArrayList();
         if (aux != null) {
             sugestoes.add(aux);
@@ -77,9 +76,14 @@ public class TrieTernaria {
                 root = root.getMeio();
             }
         }
+        //Caso de procurar uma palavra que não é folha
+        System.out.println("chamou fill suggestions;");
+        root = buscaUltimaPosicao(raizProd, palavra);
+        FillSuggestions(sugestoes, root);
+
         if (sugestoes.isEmpty()) {
             System.out.println("Não encontrou correspondencia!");
-            FindSuggestions(palavra, sugestoes, raizProd);
+            FillSuggestions(sugestoes, raizProd);
         }
         return (sugestoes);
     }
@@ -96,16 +100,11 @@ public class TrieTernaria {
         FindSuggestions(palavra, suggestions, root.getDireita());
     }
 
-    private void FindSuggestionsCat(String palavra, List<Produto> suggestions, NoTrie root) {
-        if (root == null) {
-            return;
-        }
-
-        int count = 0;
+    private void FindSuggestions2(String palavra, List<Produto> suggestions, NoTrie root) {
         NoTrie rootAux = root;
         try {
             while (rootAux != null) {
-                char letra = palavra.charAt(count);
+                char letra = palavra.charAt(0);
                 while (letra > rootAux.getLetra()) {
                     rootAux = rootAux.getDireita();
                     if (letra == rootAux.getLetra()) {
@@ -129,7 +128,43 @@ public class TrieTernaria {
                 break;
             }
         } catch (Exception e) {
-           FillSuggestionsCat(suggestions, raizCategoria);
+            FillSuggestions(suggestions, raizCategoria);
+        }
+    }
+
+    private void FindSuggestionsCat(String palavra, List<Produto> suggestions, NoTrie root) {
+        if (root == null) {
+            return;
+        }
+
+        NoTrie rootAux = root;
+        try {
+            while (rootAux != null) {
+                char letra = palavra.charAt(0);
+                while (letra > rootAux.getLetra()) {
+                    rootAux = rootAux.getDireita();
+                    if (letra == rootAux.getLetra()) {
+                        break;
+                    }
+                }
+                while (letra < rootAux.getLetra()) {
+                    rootAux = rootAux.getEsquerda();
+                    if (letra == rootAux.getLetra()) {
+                        break;
+                    }
+                }
+                if (letra == rootAux.getLetra()) {
+                    while (!rootAux.ehFolha()) {
+                        rootAux = rootAux.getMeio();
+                    }
+                }
+                for (Produto p : rootAux.getListaProduto()) {
+                    suggestions.add(p);
+                }
+                break;
+            }
+        } catch (Exception e) {
+            FillSuggestionsCat(suggestions, raizCategoria);
         }
     }
 
