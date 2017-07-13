@@ -19,9 +19,31 @@ public class AutoCompleteTableModel extends AbstractTableModel {
     private final int COL_PRECO = 2;
 
     ArrayList<Produto> listaProdutos;
- 
+
     public AutoCompleteTableModel() {
         listaProdutos = new ArrayList<>();
+    }
+
+    /**
+     * Método criado para receber o resultado da busca do autocomplete e fazer o
+     * bind com o listaProduto
+     *
+     * @param lista lista com resultados a serem exibidos na tela
+     */
+    public void preencheLista(ArrayList<Produto> lista) {
+        this.listaProdutos = lista;
+        this.fireTableDataChanged();
+    }
+
+    /**
+     * Método criado para receber o resultado da busca ORDENADO e fazer o
+     * bind com o listaProduto
+     *
+     * @param lista lista com resultados a serem exibidos na tela
+     */
+    public void constroiOrdenado(ArrayList<Produto> lista) {
+        this.listaProdutos = lista;
+        this.fireTableDataChanged();
     }
 
     @Override
@@ -40,7 +62,7 @@ public class AutoCompleteTableModel extends AbstractTableModel {
     }
 
     @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {        
+    public Object getValueAt(int rowIndex, int columnIndex) {
 
         switch (columnIndex) {
             case COL_NOME:
@@ -67,15 +89,5 @@ public class AutoCompleteTableModel extends AbstractTableModel {
                 return "?";
         }
     }
-    
-    
-    public void preencheLista(ArrayList<Produto> lista){
-        this.listaProdutos = lista;
-        this.fireTableDataChanged();
-    }
-    
-    public void constroiOrdenado(ArrayList<Produto> lista){
-        this.listaProdutos = lista;
-        this.fireTableDataChanged();
-    }
+
 }

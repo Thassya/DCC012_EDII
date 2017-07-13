@@ -15,13 +15,11 @@ import java.util.List;
 public class NoTrie {
 
     private char letra;
-    private int value = 1;
     private boolean ehFolha = false;
     private NoTrie esquerda;
     private NoTrie direita;
     private NoTrie meio;
-    private Produto produto; //para ordernar produto!
-    
+    private Produto produto;   
     private List<Produto> listaProduto = new ArrayList<>();
     
 
@@ -76,14 +74,6 @@ public class NoTrie {
         return this.letra + "-->" + this.esquerda + "|" + this.meio + "|" + this.direita;
     }
 
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
-    }
-
     public Produto getProduto() {
         return produto;
     }
@@ -93,16 +83,17 @@ public class NoTrie {
         this.ehFolha = true;
     }
 
+     public void addItemListaProduto(Produto p){
+        this.listaProduto.add(p);
+        this.ehFolha=true;
+    }
+     
     public List<Produto> getListaProduto() {
         return listaProduto;
     }
 
     public void setListaProduto(List<Produto> listaProduto) {
         this.listaProduto = listaProduto;
-    }
-    public void addItemListaProduto(Produto p){
-        this.listaProduto.add(p);
-        this.ehFolha=true;
-    }
+    } 
 
 }

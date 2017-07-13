@@ -8,6 +8,7 @@ import ufjf.br.modelos.Produto;
  * @author Thassya
  */
 public interface iProdutoDAO {
-    void Insere(Produto p) throws Exception;
-    java.util.List<Produto> getTodos() throws Exception;
+    void insere(Produto p) throws Exception;
+    List<Produto> getTodos() throws Exception;
+    void lerArquivo();
 }

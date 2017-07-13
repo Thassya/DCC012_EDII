@@ -62,7 +62,7 @@
                       <Group type="102" attributes="0">
                           <Component id="btnAddProd" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jLabel1" min="-2" pref="68" max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" pref="79" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="cbOrdena" min="-2" pref="172" max="-2" attributes="0"/>
                       </Group>

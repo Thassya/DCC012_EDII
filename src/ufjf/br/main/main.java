@@ -5,7 +5,6 @@
  */
 package ufjf.br.main;
 
-import ufjf.br.dao.ProdutoDAO;
 import ufjf.br.view.Janela;
 
 /**

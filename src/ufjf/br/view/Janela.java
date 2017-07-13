@@ -103,7 +103,7 @@ public class Janela extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnAddProd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cbOrdena, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -264,7 +264,7 @@ public class Janela extends javax.swing.JFrame {
     private void btnAutocompleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutocompleteActionPerformed
         String texto = txtBusca.getText();
         listaAutoComplete.clear();
-        listaAutoComplete = dao.getTrieCategoria().autoCompleteCategoria(texto);
+        listaAutoComplete = dao.getTrieProduto().autoCompleteProduto(texto);
         if (listaAutoComplete.size() > 1) {
             cbPrecoDesc.setEnabled(true);
             cbPrecoCresc.setEnabled(true);
@@ -304,7 +304,7 @@ public class Janela extends javax.swing.JFrame {
 
     private void cbPrecoDescItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbPrecoDescItemStateChanged
        if(cbPrecoDesc.isSelected()){
-           listaAutoComplete = dao.getOrdenaResultadoDes(listaAutoComplete);
+           listaAutoComplete = dao.getOrdenaResultadoDecres(listaAutoComplete);
            tmAutoComplete.constroiOrdenado(listaAutoComplete);
            cbPrecoDesc.setSelected(false);
        }
@@ -355,7 +355,7 @@ public class Janela extends javax.swing.JFrame {
 
     public void addProduto(Produto produto) {
         try {
-            dao.Insere(produto);
+            dao.insere(produto);
             form.dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "OPS!", JOptionPane.ERROR_MESSAGE);

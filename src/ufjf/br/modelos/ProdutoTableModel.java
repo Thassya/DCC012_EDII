@@ -29,6 +29,18 @@ public class ProdutoTableModel extends AbstractTableModel {
         dao = new ProdutoDAO();
     }
 
+    private void atualizaDados() {
+        try {
+            dao.getTodos();
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }
+    }
+
+    public ProdutoDAO getDao() {
+        return (ProdutoDAO) dao;
+    }
+
     @Override
     public int getRowCount() {
         atualizaDados();
@@ -83,17 +95,4 @@ public class ProdutoTableModel extends AbstractTableModel {
                 return "?";
         }
     }
-
-    private void atualizaDados() {
-        try {
-            dao.getTodos();
-        } catch (Exception ex) {
-            System.err.println(ex.getMessage());
-        }
-    }
-
-    public ProdutoDAO getDao() {
-        return (ProdutoDAO) dao;
-    }
-
 }

@@ -1,6 +1,4 @@
-﻿catraca;Cama;65,80;a definir
-ava;Cozinha;12,15;a definir
-abafa;Esporte;15,36;a definir
+﻿ava;Cozinha;12,15;a definir
 avaaa;Cama;13,60;a definir
 Aarao;Mesa;12,36;a definir
 aba;Banho;13,11;a definir
@@ -20,6 +18,7 @@ abadessa;Cozinha;98,90;a definir
 abadessas;Cama;46,25;a definir
 abadia;Mesa;12,98;a definir
 abadias;Banho;13,75;a definir
+abafa;Esporte;15,36;a definir
 abafá;Entretenimento;15,33;a definir
 abafada;Lazer;56,78;a definir
 abafadas;Cultura;98,36;a definir
@@ -40,6 +39,7 @@ abafando;Entretenimento;98,11;a definir
 abafar;Lazer;95,10;a definir
 abafara;Cultura;12,05;a definir
 abafará;Cozinha;13,73;a definir
+abafaram;Cama;15,15;a definir
 abafáramos;Mesa;15,60;a definir
 abafarão;Banho;56,36;a definir
 abafaras;Esporte;98,11;a definir
@@ -31833,7 +31833,6 @@ assoprarias;Cultura;96,80;a definir
 assopraríeis;Cozinha;87,90;a definir
 assoprarmo;Cama;51,25;a definir
 assoprarmos;Mesa;98,98;a definir
-catorze;Cultura;98,23;a definir
 assopras;Banho;46,75;a definir
 assoprasse;Esporte;98,36;a definir
 assoprásseis;Entretenimento;32,33;a definir
@@ -49981,8 +49980,9 @@ católicas;Banho;15,15;a definir
 catolicismo;Esporte;56,60;a definir
 católico;Entretenimento;98,36;a definir
 católicos;Lazer;65,11;a definir
-abafaram;Cama;15,15;a definir
+catorze;Cultura;98,23;a definir
 catou;Cozinha;329,70;a definir
+catraca;Cama;65,80;a definir
 catracas;Mesa;65,90;a definir
 catre;Banho;96,12;a definir
 catres;Esporte;87,15;a definir

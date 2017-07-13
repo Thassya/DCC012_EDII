@@ -5,7 +5,6 @@
  */
 package ufjf.br.dao;
 
-import com.sun.istack.internal.Nullable;
 import ufjf.br.modelos.Produto;
 import ufjf.br.modelos.Merge;
 import java.io.BufferedReader;
@@ -14,8 +13,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
 import ufjf.br.modelos.TrieTernaria;
 
 /**
@@ -33,18 +30,10 @@ public class ProdutoDAO implements iProdutoDAO {
         this.trieCategoria = new TrieTernaria();
         this.trieProduto = new TrieTernaria();
         merge = new Merge();
-    }
-
-    public static TrieTernaria getTrieProduto() {
-        return trieProduto;
-    }
-
-    public static TrieTernaria getTrieCategoria() {
-        return trieCategoria;
-    }
+    }   
 
     @Override
-    public void Insere(Produto p) throws Exception {
+    public void insere(Produto p) throws Exception {
         trieProduto.insere(p);
     }
 
@@ -53,13 +42,13 @@ public class ProdutoDAO implements iProdutoDAO {
         if (trieProduto.getRaizProd() == null) {
             lerArquivo();
         }
-
         return trieProduto.getProdutos();
     }
-
+    
+    @Override
     public void lerArquivo() {
         try {
-            FileReader fileReader = new FileReader("C:\\Users\\Thassya\\Documents\\GitHub\\DCC012_EDII\\src\\resources\\_50.txt");
+            FileReader fileReader = new FileReader("C:\\Users\\Thassya\\Documents\\GitHub\\DCC012_EDII\\src\\resources\\_50mil.txt");
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
             String linha = bufferedReader.readLine();
@@ -112,12 +101,22 @@ public class ProdutoDAO implements iProdutoDAO {
         return trieProduto.getProdutosPorPrecoDes();
     }
 
+    /**
+     * Método de orneação do resultado da busca por preço
+     * @param p ArrayList de produtos a serem ordenados
+     * @return ArrayList de produtos ordenados de maneira Crescente
+     */
     public ArrayList<Produto> getOrdenaResultadoCres(ArrayList<Produto> p) {
         merge.mergeSortPreco(p, 0);
         return p;
     }
 
-    public ArrayList<Produto> getOrdenaResultadoDes(ArrayList<Produto> p) {
+    /**
+     * Método de orneação do resultado da busca por preço
+     * @param p ArrayList de produtos a serem ordenados
+     * @return ArrayList de produtos ordenados de maneira Decrescente
+     */
+    public ArrayList<Produto> getOrdenaResultadoDecres(ArrayList<Produto> p) {
         merge.mergeSortPreco(p, 1);
         return p;
     }
@@ -128,5 +127,13 @@ public class ProdutoDAO implements iProdutoDAO {
 
     public static void setProdutoList(TrieTernaria produtoList) {
         ProdutoDAO.trieProduto = produtoList;
+    }
+    
+     public static TrieTernaria getTrieProduto() {
+        return trieProduto;
+    }
+
+    public static TrieTernaria getTrieCategoria() {
+        return trieCategoria;
     }
 }
