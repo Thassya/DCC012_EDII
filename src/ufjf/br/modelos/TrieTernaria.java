@@ -17,7 +17,10 @@ public class TrieTernaria {
     private Merge merge;
     private NoTrie raizProd;
     private NoTrie raizCategoria;
-    private static ArrayList<Produto> filtroProdutos;
+    private static ArrayList<Produto> filtroProdutos; 
+    //desnecessário... a mesma lista que foi inserida em produtos... 
+    private static ArrayList<Produto> filtroCategorias;
+
 
     /**
      * For best performance, strings should be inserted into the ternary tree in
@@ -30,6 +33,7 @@ public class TrieTernaria {
     public TrieTernaria() {
         this.merge = new Merge();
         this.filtroProdutos = new ArrayList<Produto>();
+        this.filtroCategorias = new ArrayList<Produto>();
     }
 
     /**
@@ -67,12 +71,12 @@ public class TrieTernaria {
             }
         }
         //Caso de procurar uma palavra que não é folha
-        System.out.println("chamou fill suggestions;");
+       // System.out.println("chamou fill suggestions;");
         root = buscaUltimaPosicao(raizProd, palavra);
         preencheSugestoesProd(sugestoes, root);
 
         if (sugestoes.isEmpty()) {
-            System.out.println("Não encontrou correspondencia!");
+           // System.out.println("Não encontrou correspondencia!");
             preencheSugestoesProd(sugestoes, raizProd);
         }
         return (sugestoes);
@@ -304,6 +308,7 @@ public class TrieTernaria {
      */
     public void insereCat(Produto p) {
         raizCategoria = insereCat(raizCategoria, p.getCategoria(), p);
+        filtroCategorias.add(p);
     }
 
     /**
@@ -368,7 +373,9 @@ public class TrieTernaria {
     public NoTrie getRaizProd() {
         return raizProd;
     }
-
+ public NoTrie getRaizCat() {
+        return raizCategoria;
+    }
     /**
      * Retorna todos os Produtos
      *
@@ -376,6 +383,9 @@ public class TrieTernaria {
      */
     public ArrayList<Produto> getProdutos() {
         return this.filtroProdutos;
+    }
+    public ArrayList<Produto> getCategorias() {
+        return this.filtroCategorias;
     }
 
     /**

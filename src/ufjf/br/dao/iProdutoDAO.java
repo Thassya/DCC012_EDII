@@ -9,6 +9,6 @@ import ufjf.br.modelos.Produto;
  */
 public interface iProdutoDAO {
     void insere(Produto p) throws Exception;
-    List<Produto> getTodos() throws Exception;
+    List<Produto> getTodosProdutos() throws Exception;
     void lerArquivo();
 }

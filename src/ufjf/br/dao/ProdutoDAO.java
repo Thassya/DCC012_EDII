@@ -30,7 +30,7 @@ public class ProdutoDAO implements iProdutoDAO {
         this.trieCategoria = new TrieTernaria();
         this.trieProduto = new TrieTernaria();
         merge = new Merge();
-    }   
+    }
 
     @Override
     public void insere(Produto p) throws Exception {
@@ -38,13 +38,20 @@ public class ProdutoDAO implements iProdutoDAO {
     }
 
     @Override
-    public List<Produto> getTodos() {
+    public List<Produto> getTodosProdutos() {
         if (trieProduto.getRaizProd() == null) {
             lerArquivo();
         }
         return trieProduto.getProdutos();
     }
-    
+
+    public List<Produto> getTodasCategorias() {
+        if (trieCategoria.getRaizCat() == null) {
+            lerArquivo();
+        }
+        return trieCategoria.getCategorias();
+    }
+
     @Override
     public void lerArquivo() {
         try {
@@ -103,6 +110,7 @@ public class ProdutoDAO implements iProdutoDAO {
 
     /**
      * Método de orneação do resultado da busca por preço
+     *
      * @param p ArrayList de produtos a serem ordenados
      * @return ArrayList de produtos ordenados de maneira Crescente
      */
@@ -113,6 +121,7 @@ public class ProdutoDAO implements iProdutoDAO {
 
     /**
      * Método de orneação do resultado da busca por preço
+     *
      * @param p ArrayList de produtos a serem ordenados
      * @return ArrayList de produtos ordenados de maneira Decrescente
      */
@@ -128,8 +137,8 @@ public class ProdutoDAO implements iProdutoDAO {
     public static void setProdutoList(TrieTernaria produtoList) {
         ProdutoDAO.trieProduto = produtoList;
     }
-    
-     public static TrieTernaria getTrieProduto() {
+
+    public static TrieTernaria getTrieProduto() {
         return trieProduto;
     }
 

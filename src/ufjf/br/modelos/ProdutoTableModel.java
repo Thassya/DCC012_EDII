@@ -31,7 +31,7 @@ public class ProdutoTableModel extends AbstractTableModel {
 
     private void atualizaDados() {
         try {
-            dao.getTodos();
+            dao.getTodosProdutos();
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
         }
@@ -45,7 +45,7 @@ public class ProdutoTableModel extends AbstractTableModel {
     public int getRowCount() {
         atualizaDados();
         try {
-            return dao.getTodos().size();
+            return dao.getTodosProdutos().size();
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
@@ -61,7 +61,7 @@ public class ProdutoTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         List<Produto> produtoList = new ArrayList<>();
         try {
-            produtoList = dao.getTodos();
+            produtoList = dao.getTodosProdutos();
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
